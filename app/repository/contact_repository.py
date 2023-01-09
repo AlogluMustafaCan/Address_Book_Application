@@ -1,6 +1,7 @@
 """ """
 from pymongo import MongoClient
 from urllib.parse import quote_plus
+from bson.json_util import loads, dumps
 import os
 
 _CLIENTS = {}
@@ -39,4 +40,17 @@ class ContactRepository:
         """ """
         if data is None:
             raise ValueError("data is None")
-        return self.collection.insert_one(data)
+        res = self.collection.insert_one(data)
+        print("res : ", res.__class__)
+
+    def read(self, name):
+        """ """
+        query = {"name": name}
+        res = self.collection.find_one(query)
+        #return dumps(res)
+        return res
+
+    def delete(self, name):
+        query = {"name": name}
+        res = self.collection.delete_one(query)
+

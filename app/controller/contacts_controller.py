@@ -1,6 +1,7 @@
 """ """
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request
 from app.repository.contact_repository import ContactRepository
+from app.service import contact_service
 
 contact = Blueprint('contact', __name__)
 db = ContactRepository()
@@ -9,22 +10,28 @@ db = ContactRepository()
 @contact.post('/')
 def add_contact():
     """ """
+    # res = request.get_json()
+    # print(f"res before db : {res}")
+    # db.create(request.get_json())
+    # print(f"res after db : {res}")
+    # return res
+    return contact_service.manage_create_contact(request.get_json())
 
-    db.create(request.get_json())
-    # TODO: return will be fixed
-    return "OK"
 
-
-@contact.get('/get')
-def get_contact_by_name():
+@contact.get('/get/<name>')
+def get_contact_by_name(name):
     """"""
-    return "Works"
+    return contact_service.manage_get_contact(name)
 
 
-@contact.delete('/delete')
-def delete_contact_by_name():
+@contact.delete('/delete/<name>')
+def delete_contact_by_name(name):
     """ """
-    return "Works"
+    contact_service.manage_delete_contact(name)
+    return {
+        "name": name,
+        "message": "Contact deleted successfully"
+    }
 
 
 @contact.put('/update')
