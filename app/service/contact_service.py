@@ -20,3 +20,8 @@ def manage_get_contact(data):
 def manage_delete_contact(data):
     """ """
     db.delete(data)
+
+
+def manage_update_contact(name, data):
+    """ """
+    db.update(name, data)

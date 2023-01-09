@@ -1,7 +1,6 @@
 """ """
 from pymongo import MongoClient
 from urllib.parse import quote_plus
-from bson.json_util import loads, dumps
 import os
 
 _CLIENTS = {}
@@ -16,14 +15,15 @@ class ContactRepository:
             host=None,
             db_name=None,
             user_name=None,
-            password=None
+            password=None,
+            collection_name=None
     ):
-        self.scheme = "mongodb://"  # scheme or os.getenv("DB_SCHEME")
-        self.host = "localhost"  # host or os.getenv("DB_HOST")
-        self.db_name = "Projects"  # db_name or os.getenv("DB_NAME")
-        self.collection_name = "AddressBookAppDB"  # collection_name or os.getenv("DB_COLLECTION")
-        self.user_name = ""  # user_name or os.getenv("DB_USERNAME")
-        self.password = ""  # password or os.getenv("DB_PASSWORD")
+        self.scheme = "mongodb://" or scheme or os.getenv("DB_SCHEME")
+        self.host = "localhost" or host or os.getenv("DB_HOST")
+        self.db_name = "Projects" or db_name or os.getenv("DB_NAME")
+        self.collection_name = "AddressBookAppDB" or collection_name or os.getenv("DB_COLLECTION")
+        self.user_name = "" or user_name or os.getenv("DB_USERNAME")
+        self.password = "" or password or os.getenv("DB_PASSWORD")
 
         if user_name and password:
             username = quote_plus(user_name)
@@ -53,4 +53,9 @@ class ContactRepository:
     def delete(self, name):
         query = {"name": name}
         res = self.collection.delete_one(query)
+
+    def update(self, name, data):
+        where = {"name": name}
+        update = {"$set": data}
+        res = self.collection.update_one(where, update)
 

@@ -28,13 +28,11 @@ def get_contact_by_name(name):
 def delete_contact_by_name(name):
     """ """
     contact_service.manage_delete_contact(name)
-    return {
-        "name": name,
-        "message": "Contact deleted successfully"
-    }
+    return "OK"
 
 
-@contact.put('/update')
-def update_contact_by_name():
-    """"""
+@contact.put('/update/<name>')
+def update_contact_by_name(name):
+    """ """
+    contact_service.manage_update_contact(name, request.json)
     return "Works"
