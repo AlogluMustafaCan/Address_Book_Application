@@ -40,22 +40,19 @@ class ContactRepository:
         """ """
         if data is None:
             raise ValueError("data is None")
-        res = self.collection.insert_one(data)
-        print("res : ", res.__class__)
+        self.collection.insert_one(data)
 
     def read(self, name):
         """ """
         query = {"name": name}
-        res = self.collection.find_one(query)
-        #return dumps(res)
-        return res
+        return self.collection.find_one(query)
 
     def delete(self, name):
         query = {"name": name}
-        res = self.collection.delete_one(query)
+        self.collection.delete_one(query)
 
     def update(self, name, data):
         where = {"name": name}
         update = {"$set": data}
-        res = self.collection.update_one(where, update)
+        self.collection.update_one(where, update)
 

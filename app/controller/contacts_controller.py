@@ -10,11 +10,6 @@ db = ContactRepository()
 @contact.post('/')
 def add_contact():
     """ """
-    # res = request.get_json()
-    # print(f"res before db : {res}")
-    # db.create(request.get_json())
-    # print(f"res after db : {res}")
-    # return res
     return contact_service.manage_create_contact(request.get_json())
 
 
