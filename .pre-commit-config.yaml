@@ -4,3 +4,9 @@ repos:
   hooks:
     - id: no-commit-to-branch
       args: ['--branch', 'master']
+- repo: https://github.com/AlogluMustafaCan/custom-git-hook
+  rev: 9edf872
+  hooks:
+    - commitizen
+    - refs_control
+    - type_control
