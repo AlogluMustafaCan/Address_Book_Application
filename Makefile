@@ -4,12 +4,8 @@ help:
 	@echo ${PROJECT_NAME}
 	@echo
 	@echo "help"
-commit:
-	@cz commit
-
 init:
 	@pipenv install --dev
-	pre-commit install --hook-type commit-msg
 check:
 	@PIPENV_IGNORE_VIRTUALENVS=1 pipenv run flake8 app/
 test:
